@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color:beige;
+        }
+        canvas{
+            background-color:beige;
+            border: 5px dashed lightgray;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="400" height="400" id="hornses">
+        Your browser doesn't support canvas elements.
+    </canvas>
+    <img src="../cours5/sizeshift/squidV2.jpg" width="20" height="20" id="monster">
+</body>
+<script>
+    var canevas;
+    var contexte;
+
+    let isDrawing = false;
+    window.onload = function(){
+        canevas = document.getElementById("hornses");
+        contexte = canevas.getContext("2d");
+        
+        drawLight(contexte);
+        contexte.lineWidth = 10;
+        contexte.lineCap = "round";
+        contexte.strokeStyle = "orange";
+        
+        canevas.addEventListener("mousemove", moveDaBigD);
+        canevas.addEventListener("mousedown", crushDaBigD);
+        canevas.addEventListener("mouseup", liftDaBigD)
+        }
+
+    function crushDaBigD(event){
+        isDrawing = true;
+        console.log("Crushed!");
+
+        contexte.beginPath();
+        contexte.moveTo(x,y);
+
+    }
+
+    function liftDaBigD(event){
+        isDrawing = false;
+        console.log("UNCRUSHED!!!!");
+
+        
+        contexte.lineTo(x,y);
+        contexte.stroke();
+    }
+
+    function moveDaBigD(event){
+        let dimensionCanvas = canevas.getBoundingClientRect();
+        let x = event.clientX - dimensionCanvas.left;
+        let y = event.clientY - dimensionCanvas.top
+        if(isDrawing && x >= dimensionCanvas.left  && x <= dimensionCanvas.right && x >= dimensionCanvas.top && x <= dimensionCanvas.bottom){
+            
+            contexte.lineTo(x,y);
+            contexte.stroke();
+            contexte.beginPath();
+            contexte.moveTo(x,y);
+
+        }
+    }
+
+    function drawStuff(contexte){
+        contexte.strokeStyle = "blue";
+        contexte.moveTo(10, 10);
+        contexte.lineTo(390, 390);
+        contexte.lineTo(230, 390);
+        contexte.moveTo(300, 300);
+        contexte.lineTo(140, 300);
+        contexte.fillStyle = "magenta";
+        contexte.fill();
+        contexte.stroke();
+
+        contexte.beginPath();
+        contexte.rect(10,10,200,200);
+        contexte.fillStyle = "orange";
+        contexte.fill();
+        //rect(x,y,width,height)
+        contexte.stroke();
+
+        contexte.beginPath();
+        contexte.arc(110,110,75,0.5*Math.PI,Math.PI)
+        //arc(posX,posY,rayon,startAngle,EndAngle)
+        contexte.fillStyle = "limegreen";
+        contexte.stroke();
+        contexte.fill();
+    }
+
+    function drawLight(ctx){
+        let pos = {
+            X: 200,
+            Y: 390,
+        }
+
+        ctx.fillStyle = "black";
+        ctx.moveTo(pos.X, pos.Y);
+        ctx.rect(pos.X - 50, pos.Y - 60, 100, 60)
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.arc(pos.X-50, pos.Y - 200, 50, 1.25 * Math.PI, 0.5 * Math.PI)
+        ctx.fill();
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(pos.X, pos.Y - 60);
+        ctx.lineTo(pos.X + 90, pos.Y - 150);
+        ctx.moveTo(pos.X + 90, pos.Y - 150);
+        ctx.lineTo(pos.X, pos.Y - 200);
+        ctx.stroke();
+
+        ctx.fillStyle = "navajowhite";
+        ctx.beginPath();
+        ctx.moveTo(pos.X-50, pos.Y - 200);
+        ctx.lineTo(pos.X-200, pos.Y - 300);
+        ctx.lineTo(pos.X-200, pos.Y + 250)
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.moveTo(pos.X, pos.Y);
+        ctx.rect(pos.X - 50, pos.Y - 60, 100, 60)
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.arc(pos.X-50, pos.Y - 200, 50, 1.25 * Math.PI, 0.5 * Math.PI)
+        ctx.fill();
+
+        
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.font =  "32px Trebuchet";
+        ctx.strokeText("Yellow World!", 50, 150);
+        ctx.fillText("Wowsers", 20, 80);
+        const monstre = document.getElementById("monster");
+        ctx.drawImage(monstre, 300, 30, 50, 50);
+        
+    }
+</script>
+</html>

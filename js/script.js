@@ -1,5 +1,7 @@
 let canevas;
 let contexte;
+let posX;
+let posY;
 let p1X;
 let p1Y;
 let p2X;
@@ -22,10 +24,12 @@ let touchesClavier = {
 };
 
 const VITESSE_JOUEUR = 10;
-const DIMENSION_JOUEUR = 35;
-const DIENSION_OBJET;
+const LARGEUR_JOUEUR = 35;
+const HAUTEUR_JOUEUR = 35;
+const DIMENSION_OBJET = 50;
 
 window.onload = function () {
+    //obtient element texte avec font qu'on peut alors utiliser
     document.getElementById("chargeTexte").style.display = "none";
 
     window.addEventListener("keydown", toucheAppuyee);
@@ -33,9 +37,13 @@ window.onload = function () {
 
     canevas = document.getElementById('ZoneJeu');
     contexte = canevas.getContext('2d');
+    contexte.canvas.width = window.innerWidth - window.innerWidth * 0.01;
+    contexte.canvas.height = window.innerHeight - window.innerHeight * 0.01;
 
-    posX = (canevas.width - DIMENSION_CARRE) / 2;
-    posY = (canevas.height - DIMENSION_CARRE) / 2;
+    p1X = (canevas.width - LARGEUR_JOUEUR) / 2;
+    p1Y = (canevas.height - HAUTEUR_JOUEUR) / 2;
+    p2X = (canevas.width - LARGEUR_JOUEUR) / 2;
+    p2Y = (canevas.height - HAUTEUR_JOUEUR) / 2;
 
     window.requestAnimationFrame(boucleJeu);  // le navigateur appellera boucleJeu() au bon moment
 }
@@ -106,13 +114,27 @@ function boucleJeu(timeStamp){
     window.requestAnimationFrame(boucleJeu);  // le navigateur appellera boucleJeu() au bon moment
 }
 
+function calculerPosition(){
+    console.log();
+}
+
 function dessiner() {
+    console.log("0");
+    dessinerBG();
     // effacer le canevas
-    contexte.clearRect(0, 0, canevas.width, canevas.height);
+    contexte.clearRect(0, 0, canevas.width - 1, canevas.height - 1);
 
     // affiche le carré
-    contexte.fillStyle("orange");
-    contexte.fillRect(posX, posY, DIMENSION_CARRE, DIMENSION_CARRE);
+    contexte.fillStyle = "orange";
+    contexte.fillRect(0, 0, canevas.width - 1, canevas.height - 1);
 
 
+}
+
+function dessinerBG(){
+    let repeatX = Math.round(contexte.canvas.width / 10);
+    let repeatY = Math.round(contexte.canvas.width / 10);
+    for(let indexX = 0; indexX < repeatX; indexX++){
+
+    }
 }
